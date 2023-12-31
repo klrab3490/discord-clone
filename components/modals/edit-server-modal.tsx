@@ -39,8 +39,8 @@ export const EditServerModal = () => {
 
     useEffect(() => {
         if (server) {
-            form.setValue("name", server.name);
-            form.setValue("imageUrl", server.imageUrl);
+            form.setValue("name", (server as unknown as { name: string }).name);
+            form.setValue("imageUrl", (server as unknown as { imageUrl: string }).imageUrl);
         }
     },[server,form]);
 
@@ -48,7 +48,7 @@ export const EditServerModal = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            await axios.patch(`/api/servers/${server?.id}`, values);
+            await axios.patch(`/api/servers/${(server as unknown as { id: string }).id}`, values);
             form.reset();
             router.refresh();
             onClose();
